@@ -9,6 +9,9 @@ class MyApp extends StatelessWidget {
     // final wordPair = new WordPair.random(); // 新增了这一行
     return new MaterialApp(
       title: 'Welcome to Flutter',
+      theme: new ThemeData(          // 新增代码开始... 
+        primaryColor: Colors.white,
+      ),                             // ... 代码新增结束
       home: new RandomWords(),
     );
   }
