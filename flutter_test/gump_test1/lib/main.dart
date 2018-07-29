@@ -30,6 +30,10 @@ class RandomWordsState extends State<RandomWords> {
       // 代码从这里...
       appBar: new AppBar(
         title: new Text('Startup Name Generator'),
+        actions: <Widget>[
+          // 新增代码开始 ...
+          new IconButton(icon: const Icon(Icons.list), onPressed: _pushSaved),
+        ], // ... 代码新增结束
       ),
       body: _buildSuggestions(),
     ); // ... 添加到这里
@@ -76,7 +80,8 @@ class RandomWordsState extends State<RandomWords> {
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ), // ... 新增代码结束
-      onTap: () {        // 增加如下 9 行代码...
+      onTap: () {
+        // 增加如下 9 行代码...
         setState(() {
           if (alreadySaved) {
             _saved.remove(pair);
@@ -87,6 +92,42 @@ class RandomWordsState extends State<RandomWords> {
       }, // ... 一直到这里
     );
   }
+
+  // 新增代码开始
+  void _pushSaved() {
+    Navigator.of(context).push(
+      new MaterialPageRoute<void>(
+        // 新增如下20行代码 ...
+        builder: (BuildContext context) {
+          final Iterable<ListTile> tiles = _saved.map(
+            (WordPair pair) {
+              return new ListTile(
+                title: new Text(
+                  pair.asPascalCase,
+                  style: _biggerFont,
+                ),
+              );
+            },
+          );
+          final List<Widget> divided = ListTile
+              .divideTiles(
+                context: context,
+                tiles: tiles,
+              )
+              .toList();
+
+          return new Scaffold(
+            // 新增 6 行代码开始 ...
+            appBar: new AppBar(
+              title: const Text('Saved Suggestions'),
+            ),
+            body: new ListView(children: divided),
+          ); // ... 新增代码段结束.
+        },
+      ), // ... 新增代码结束
+    );
+  }
+  // 新增代码结束
 }
 
 class RandomWords extends StatefulWidget {
