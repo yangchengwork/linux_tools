@@ -71,10 +71,20 @@ class RandomWordsState extends State<RandomWords> {
         pair.asPascalCase,
         style: _biggerFont,
       ),
-      trailing: new Icon(        // 新增代码开始 ...
+      trailing: new Icon(
+        // 新增代码开始 ...
         alreadySaved ? Icons.favorite : Icons.favorite_border,
         color: alreadySaved ? Colors.red : null,
       ), // ... 新增代码结束
+      onTap: () {        // 增加如下 9 行代码...
+        setState(() {
+          if (alreadySaved) {
+            _saved.remove(pair);
+          } else {
+            _saved.add(pair);
+          }
+        });
+      }, // ... 一直到这里
     );
   }
 }
