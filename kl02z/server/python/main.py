@@ -3,6 +3,10 @@ import struct;
 
 app = Flask(__name__)
 
+outx = 0;
+outy = 0;
+outz = 0;
+
 @app.route('/')
 def index():
     return 'Index Page'
@@ -36,19 +40,20 @@ def about():
 
 @app.route('/kl02z', methods=['GET', 'POST'])
 def login():
+    global outx, outy, outz
     if request.method == 'POST':
         # print(request.form);
         length = int(request.form['len']);
         reStr = "@%dh" % (length * 3);
         buf = request.form['val'];
         # buf = buf.encode('utf-8',"ignore");
-        print(length, len(buf));
+        # print(length, len(buf));
         # for id in buf:
         #     print(ord(id));
         # buf = bytearray(buf);
         # print(length, buf);
         buf = struct.unpack(reStr, buf.encode('ISO-8859-1'));
-        print(length, len(buf[:length]), len(buf[length: 2*length]), len(buf[2*length:]));
+        # print(length, len(buf[:length]), len(buf[length: 2*length]), len(buf[2*length:]));
         x = 0;
         y = 0;
         z = 0;
@@ -61,16 +66,16 @@ def login():
         for i in buf[2*length:]:
             z += i;
             # print('z', i);
-        x = int(x/length);
-        y = int(y/length);
-        z = int(z/length);
-        print(x, y, z);
+        outx = int(x/length);
+        outy = int(y/length);
+        outz = int(z/length);
+        # print(x, y, z);
         # do_the_login()
-        return 'The Post page'
+        return 'value x=%d y=%d z=%d' % (outx, outy, outz);
     else:
         # show_the_login_form()
-        print("test kl02z Get");
-        return 'The Get Page'
+        # print("test kl02z Get");
+        return 'get value x=%d y=%d z=%d' % (outx, outy, outz);
     
 
 if __name__ == '__main__':
