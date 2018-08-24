@@ -14,9 +14,9 @@ COMBPS = 115200
 class MSerialPort:
     message = ""
     counter = 0
-    x = 0
-    y = 0
-    z = 0
+    x = []
+    y = []
+    z = []
 
     def __init__(self, port, buand):
         self.port = serial.Serial(port, buand)
@@ -36,7 +36,9 @@ class MSerialPort:
 
     def read_data(self):
         self.counter = 0
-        self.x = self.y = self.z = 0;
+        self.x = [];
+        self.y = [];
+        self.z = [];
         self.port.flushInput();
         while True:
             try:
@@ -58,15 +60,15 @@ class MSerialPort:
         m = pattern.findall(dataStr);
         # print(dataStr, m);
         if len(m) == 3:
-            self.x += int(m[0]);
-            self.y += int(m[1]);
-            self.z += int(m[2]);
+            self.x.append(int(m[0]));
+            self.y.append(int(m[1]));
+            self.z.append(int(m[2]));
             # print(dataStr, x, y, z);
 
     def getEndData(self):
-        self.x /= self.counter;
-        self.y /= self.counter;
-        self.z /= self.counter;
+        # self.x /= self.counter;
+        # self.y /= self.counter;
+        # self.z /= self.counter;
         return (self.x, self.y, self.z);
         
 
