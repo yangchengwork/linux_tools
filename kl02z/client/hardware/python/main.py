@@ -3,6 +3,7 @@
 
 import serial;
 import time, re;
+import struct;
 
 # import threading;
 import _thread
@@ -71,26 +72,34 @@ class MSerialPort:
         # self.x /= self.counter;
         # self.y /= self.counter;
         # self.z /= self.counter;
-        return {'x':self.x, 'y':self.y, 'z':self.z};
+        # return {'x':self.x, 'y':self.y, 'z':self.z};
+        return (self.x, self.y, self.z);
         
 def post_test(data):
     # requests.get('http://localhost:5000/kl02z')             # GET请求
     # requests.post("http://localhost:5000/kl02z")            # POST请求
-    headers = {'content-type': 'application/json',
-        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'};
+    # headers = {'content-type': 'application/json',
+    #     'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'};
 
     # data = {'name': 'letian', 'password': '123'};
 
     # print(type(data), data);
     # data = str(data);
     # print(type(data), data);
-    buf = {}
-    for i in data:
-        bufStr = ",".join('%s' %id for id in data[i]);
-        # print(i, bufStr);
-        buf[i] = bufStr;
-    print(buf);
+    # buf = {}
+    # for i in data:
+    #     bufStr = ",".join('%s' %id for id in data[i]);
+    #     # print(i, bufStr);
+    #     buf[i] = bufStr;
+    # print(buf);
 
+    length = len(data[0]);
+    reStr = "@%dh" % (length * 3);
+    # print(length, len(data[1]), len(data[2]), len(data[3]), reStr);
+    buf = {};
+    buf['reStr'] = reStr;
+    buf['val'] = struct.pack(reStr, *data[0], *data[1], *data[2]);
+    # print(data, buf);
     """
     encode_data = encode_multipart_formdata(data)
     data = encode_data[0]
