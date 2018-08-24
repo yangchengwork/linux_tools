@@ -1,4 +1,4 @@
-from flask import Flask, request;
+from flask import Flask, request, make_response, jsonify;
 import struct;
 
 app = Flask(__name__)
@@ -75,7 +75,17 @@ def login():
     else:
         # show_the_login_form()
         # print("test kl02z Get");
-        return 'get value x=%d y=%d z=%d' % (outx, outy, outz);
+        result_text = {"statusCode": 200,
+        "x": '%d' % outx,
+        "y": '%d' % outy,
+        "z": '%d' % outz,
+        }
+        response = make_response(jsonify(result_text))
+        # response = make_response()
+        response.headers['Access-Control-Allow-Origin'] = '*'
+        response.headers['Access-Control-Allow-Methods'] = 'OPTIONS,HEAD,GET,POST'
+        response.headers['Access-Control-Allow-Headers'] = 'x-requested-with'
+        return response;
     
 
 if __name__ == '__main__':
