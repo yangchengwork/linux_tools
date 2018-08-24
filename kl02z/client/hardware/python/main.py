@@ -97,8 +97,9 @@ def post_test(data):
     reStr = "@%dh" % (length * 3);
     # print(length, len(data[1]), len(data[2]), len(data[3]), reStr);
     buf = {};
-    buf['reStr'] = reStr;
-    buf['val'] = struct.pack(reStr, *data[0], *data[1], *data[2]);
+    buf['len'] = length;
+    # buf['val'] = struct.pack(reStr, *data[0], *data[1], *data[2]).decode('utf-8',"ignore");
+    buf['val'] = struct.pack(reStr, *data[0], *data[1], *data[2]).decode("ISO-8859-1");
     # print(data, buf);
     """
     encode_data = encode_multipart_formdata(data)
