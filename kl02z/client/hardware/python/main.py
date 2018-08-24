@@ -6,6 +6,8 @@ import time, re;
 
 # import threading;
 import _thread
+import requests;
+from urllib3 import encode_multipart_formdata;
 
 COMPATH = "/dev/ttyACM0"
 COMBPS = 115200
@@ -69,14 +71,38 @@ class MSerialPort:
         # self.x /= self.counter;
         # self.y /= self.counter;
         # self.z /= self.counter;
-        return (self.x, self.y, self.z);
+        return {'x':self.x, 'y':self.y, 'z':self.z};
         
+def post_test(data):
+    # requests.get('http://localhost:5000/kl02z')             # GET请求
+    # requests.post("http://localhost:5000/kl02z")            # POST请求
+    headers = {'content-type': 'application/json',
+        'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:22.0) Gecko/20100101 Firefox/22.0'};
+
+    # data = {'name': 'letian', 'password': '123'};
+
+    # print(type(data), data);
+    # data = str(data);
+    # print(type(data), data);
+    buf = {}
+    for i in data:
+        bufStr = ",".join('%s' %id for id in data[i]);
+        # print(i, bufStr);
+        buf[i] = bufStr;
+    print(buf);
+
+    """
+    encode_data = encode_multipart_formdata(data)
+    data = encode_data[0]
+    headers['Content-Type'] = encode_data[1]
+    """
+    # r = requests.post("http://localhost:5000/kl02z", data=data, headers=headers);
+    r = requests.post("http://localhost:5000/kl02z", data=buf);
+    print(r.text);
 
 def main():
     mSerial = MSerialPort(COMPATH, COMBPS)
     _thread.start_new_thread(mSerial.read_data, ())
-    # thread_read = threading.Thread(target=mSerial.read_data)
-    # thread_read.start();
     """
     while True:
         time.sleep(1)
@@ -87,7 +113,9 @@ def main():
         print('next line')
     """
     time.sleep(1)
-    print(mSerial.getEndData());
+    data = mSerial.getEndData();
+    # print(data);
+    post_test(data);
     mSerial.port_close()
 
 
