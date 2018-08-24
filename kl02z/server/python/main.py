@@ -1,4 +1,6 @@
-from flask import Flask
+from flask import Flask, request;
+import struct;
+
 app = Flask(__name__)
 
 @app.route('/')
@@ -34,13 +36,19 @@ def about():
 
 @app.route('/kl02z', methods=['GET', 'POST'])
 def login():
-    """
     if request.method == 'POST':
-        do_the_login()
+        # print(request.form);
+        reStr = request.form['reStr'];
+        # buf = struct.unpack(reStr, request.form['val']);
+        buf = request.form['val'];
+        buf = struct.unpack(reStr, buf.encode());
+        print(reStr, buf);
+        # do_the_login()
+        return 'The Post page'
     else:
-        show_the_login_form()
-    """
-    return 'The Login Page'
+        # show_the_login_form()
+        print("test kl02z Get");
+        return 'The Get Page'
     
 
 if __name__ == '__main__':
