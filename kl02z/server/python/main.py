@@ -38,11 +38,33 @@ def about():
 def login():
     if request.method == 'POST':
         # print(request.form);
-        reStr = request.form['reStr'];
-        # buf = struct.unpack(reStr, request.form['val']);
+        length = int(request.form['len']);
+        reStr = "@%dh" % (length * 3);
         buf = request.form['val'];
-        buf = struct.unpack(reStr, buf.encode());
-        print(reStr, buf);
+        # buf = buf.encode('utf-8',"ignore");
+        print(length, len(buf));
+        # for id in buf:
+        #     print(ord(id));
+        # buf = bytearray(buf);
+        # print(length, buf);
+        buf = struct.unpack(reStr, buf.encode('ISO-8859-1'));
+        print(length, len(buf[:length]), len(buf[length: 2*length]), len(buf[2*length:]));
+        x = 0;
+        y = 0;
+        z = 0;
+        for i in buf[:length]:
+            x += i;
+            # print('x', i);
+        for i in buf[length: 2*length]:
+            y += i;
+            # print('y', i);
+        for i in buf[2*length:]:
+            z += i;
+            # print('z', i);
+        x = int(x/length);
+        y = int(y/length);
+        z = int(z/length);
+        print(x, y, z);
         # do_the_login()
         return 'The Post page'
     else:
