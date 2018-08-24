@@ -73,7 +73,11 @@ class MSerialPort:
         # self.y /= self.counter;
         # self.z /= self.counter;
         # return {'x':self.x, 'y':self.y, 'z':self.z};
-        return (self.x, self.y, self.z);
+        data = (self.x, self.y, self.z)
+        self.x = [];
+        self.y = [];
+        self.z = [];
+        return data;
         
 def post_test(data):
     # requests.get('http://localhost:5000/kl02z')             # GET请求
@@ -113,19 +117,20 @@ def post_test(data):
 def main():
     mSerial = MSerialPort(COMPATH, COMBPS)
     _thread.start_new_thread(mSerial.read_data, ())
-    """
     while True:
-        time.sleep(1)
-        a = input("input:").lower();
-        if a == 'q':
-            break;
-        print(mSerial.message)
-        print('next line')
+        time.sleep(0.1)
+        # a = input("input:").lower();
+        # if a == 'q':
+        #    break;
+        data = mSerial.getEndData();
+        post_test(data);
+        # print('next line')
     """
     time.sleep(1)
     data = mSerial.getEndData();
     # print(data);
     post_test(data);
+    """
     mSerial.port_close()
 
 
