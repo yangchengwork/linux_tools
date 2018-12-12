@@ -7,6 +7,7 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
   input: string;
+  hexstr: string;
 
   constructor(public navCtrl: NavController) {
 
@@ -41,9 +42,8 @@ export class HomePage {
   }
 
   onButton(input) {
-    console.log(input);
     const buf = this.convertStr(input);
-    console.log(buf.toString());
+    this.hexstr = buf.toString();
   }
 
 }
