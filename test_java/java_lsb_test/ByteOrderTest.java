@@ -23,7 +23,7 @@ public class ByteOrderTest {
 		// for(int i=0;i<buf.limit();i++)
 		//	System.out.println(buf.get()&0xFF); 
 */
-		buf.order(ByteOrder.LITTLE_ENDIAN);
+		// buf.order(ByteOrder.LITTLE_ENDIAN);
 		System.out.println("Now: "+buf.order().toString());
 		// unsigned char sdata[5] = {0x93, 0x88, 0xB1, 0x18, 0x01};
 		//
