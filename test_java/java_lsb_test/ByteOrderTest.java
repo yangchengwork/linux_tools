@@ -53,8 +53,8 @@ public class ByteOrderTest {
 		byte month = (byte)((tar >> 7) & 0xF);
 		byte day = (byte)((tar >> 11) & 0x1F);
 		byte hour = (byte)((tar >> 16) & 0x1F);
-		byte minute = (byte)((tar >> 22) & 0x3F);
-		byte second = (byte)((tar >> 28) & 0x3F);
+		byte minute = (byte)((tar >> 21) & 0x3F);
+		byte second = (byte)((tar >> 27) & 0x3F);
 		System.out.println("" + year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second);
 
 		System.out.println("My PC: "+ByteOrder.nativeOrder().toString());
