@@ -9,15 +9,21 @@
 
 void main(void)
 {
-	unsigned char sdata[5] = {0x93, 0x88, 0xB1, 0x18, 0x01};
+	// unsigned char sdata[5] = {0x93, 0x88, 0xB1, 0x18, 0x01};
+	// 4B801286006A44485805016944489808
+	// unsigned char sdata[5] = {0x6A, 0x44, 0x48, 0x58, 0x05};
+	// unsigned char sdata[5] = {0x69, 0x44, 0x48, 0x98, 0x08};
+	// unsigned char sdata[5] = {0x69, 0x44, 0x48, 0x98, 0x08};
+	unsigned char sdata[5] = {0x99, 0xC4, 0x4E, 0x88, 0x09};
 	unsigned long long number = 0;
 
-	number = 0x01;
-	number = (number << 8) + 0x18;
-	number = (number << 8) + 0xB1;
-	number = (number << 8) + 0x88;
-	number = (number << 8) + 0x93;
+	number = sdata[4];
+	number = (number << 8) + sdata[3];
+	number = (number << 8) + sdata[2];
+	number = (number << 8) + sdata[1];
+	number = (number << 8) + sdata[0];
 
+	int type = 0;
 	int year = 2000;
 	int month = 0;
 	int day = 0;
@@ -25,12 +31,13 @@ void main(void)
 	int minute = 0;
 	int second = 0;
 
-	year = year + (number & 0x7f);
-	month = (number >> 7) & 0x0f;
-	day = (number >> 11) & 0x1f;
-	hour = (number >> 16) & 0x1f;
-	minute = (number >> 21) & 0x3f;
-	second = (number >> 27) & 0x3f;
+	type = number & 0x7;
+	year = year + ((number >> 3) & 0x7f);
+	month = (number >> 10) & 0x0f;
+	day = (number >> 14) & 0x1f;
+	hour = (number >> 19) & 0x1f;
+	minute = (number >> 24) & 0x3f;
+	second = (number >> 30) & 0x3f;
 
-	printf("%04d/%02d/%02d %02d:%02d:%02d\r\n", year, month, day, hour, minute, second);	
+	printf("type=%d %04d/%02d/%02d %02d:%02d:%02d\r\n", type, year, month, day, hour, minute, second);	
 }
