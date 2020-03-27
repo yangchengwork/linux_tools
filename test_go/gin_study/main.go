@@ -30,5 +30,29 @@ func main() {
         c.String(http.StatusOK, "%s is %s", name, role);
     })
 
+    r.POST("/form", func(c *gin.Context) {
+        username := c.PostForm("username");
+        password := c.DefaultPostForm("password", "000000");
+
+        c.JSON(http.StatusOK, gin.H {
+            "username": username,
+            "password": password,
+        })
+    })
+
+    r.POST("/posts", func(c *gin.Context) {
+        id          := c.Query("id");
+        page        := c.DefaultQuery("page", "0");
+        username    := c.PostForm("username");
+        password    := c.DefaultPostForm("password", "000000");
+
+        c.JSON(http.StatusOK, gin.H {
+            "id"      : id,
+            "page"    : page,
+            "username": username,
+            "password": password,
+        })
+    })
+
     r.Run(":9080");
 }
