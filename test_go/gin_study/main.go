@@ -1,6 +1,7 @@
 package main
 
 import (
+    "log"
     "net/http"
     "github.com/gin-gonic/gin"
 )
@@ -90,6 +91,24 @@ func main() {
         v2.GET("/posts", defaultHandler)
         v2.GET("/series", defaultHandler)
     }
+
+    r.POST("/upload1", func(c *gin.Context) {
+        file, _ := c.FormFile("file")
+        // c.SaveUploaderFile(file, dst)
+        c.String(http.StatusOK, "%s uploaded!", file.Filename)
+    })
+
+    r.POST("/upload2", func(c *gin.Context) {
+        // Multipart form
+        form, _ := c.MultipartForm();
+        files := form.File["upload[]"]
+
+        for _, file := range files {
+            log.Println(file.Filename)
+            // c.SaveUploadedFile(file, dst)
+        }
+        c.String(http.StatusOK, "%d files uploaded!", len(files))
+    })
 
     r.Run(":9080");
 }
