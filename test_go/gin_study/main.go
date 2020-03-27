@@ -64,5 +64,14 @@ func main() {
         })
     })
 
+    r.GET("/redirect", func(c *gin.Context) {
+        c.Redirect(http.StatusMovedPermanently, "/index")
+    })
+
+    r.GET("/goindex", func(c *gin.Context) {
+        c.Request.URL.Path = "/"
+        r.HandleContext(c)
+    })
+
     r.Run(":9080");
 }
