@@ -1,6 +1,7 @@
 package main
 
 import (
+    "net/http"
     "github.com/gin-gonic/gin"
 )
 
@@ -8,8 +9,8 @@ func main() {
     r := gin.Default();
 
     r.GET("/", func(c *gin.Context) {
-        c.String(200, "hello, Gump Yang");
+        c.String(http.StatusOK, "Who are you?");
     })
 
-    r.Run();
+    r.Run(":9080");
 }
