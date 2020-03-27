@@ -54,5 +54,15 @@ func main() {
         })
     })
 
+    r.POST("/postmap", func(c *gin.Context) {
+        ids     := c.QueryMap("ids");
+        names   := c.PostFormMap("names")
+
+        c.JSON(http.StatusOK, gin.H {
+            "ids"   : ids,
+            "names" : names,
+        })
+    })
+
     r.Run(":9080");
 }
