@@ -20,19 +20,32 @@ def main_func():
         # 打开没有的
         rOpen = 0
         for n in range(3):
-            if rOpen == rIndex:
+            if n == rIndex:
                 continue
-            elif rOpen == rSelect:
+            elif n == rSelect:
                 continue
             else:
                 rOpen = n
-        
-        # 这里有点已经知道结果的味道
-        if rIndex == rSelect:
-            keepCount += 1
-        else:
-            changeCount += 1
+                break
+
+        # 进行结果计算
+        for n in range(3):
+            if n == rSelect:
+                if 1 == boxes[n]:
+                    keepCount += 1
+                    break
+            elif n == rOpen:
+                continue
+            elif 1 == boxes[n]:
+                changeCount += 1
+                break
     
+        # 这里有点已经知道结果的味道
+        # if rIndex == rSelect:
+        #     keepCount += 1
+        # else:
+        #     changeCount += 1
+
     print("改变选择比例={:.2f}% 不改变选择比例={:.2f}%".format(changeCount*100/maxCount, keepCount*100/maxCount))
 
 if __name__ == '__main__':

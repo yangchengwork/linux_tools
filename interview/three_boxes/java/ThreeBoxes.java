@@ -1,3 +1,4 @@
+// 参考https://blog.csdn.net/Two_Water/article/details/53581978
 import java.util.Random;
 
 public class ThreeBoxes {
