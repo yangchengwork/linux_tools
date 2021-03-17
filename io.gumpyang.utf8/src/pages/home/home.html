@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label color="primary">输入文字</ion-label>
+    <ion-input type="text" [(ngModel)]="input"></ion-input>
+  </ion-item>
+  <button ion-button (click)="onButton(input)">转换</button>
+  <ion-item>
+    <ion-label>转换后的数值</ion-label>
+    <ion-label>{{hexstr}}</ion-label>
+  </ion-item>
+</ion-content>
