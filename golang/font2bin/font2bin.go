@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"image"
 	"image/png"
+	"io/ioutil"
 	"log"
 	"os"
 
@@ -143,25 +144,10 @@ func main() {
 	*/
 
 	fmt.Printf("bin %d\n", len(bData.Bytes()))
-}
 
-func main_old() {
-	/*
-		err = ioutil.WriteFile(*binName, head.Bytes(), 0644)
-		if err != nil {
-			log.Fatalln(err)
-		}
+	err := ioutil.WriteFile(*binName, bData.Bytes(), 0644)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-		var build strings.Builder
-		for _, v := range oStr {
-			build.WriteString(v)
-		}
-		s = build.String()
-
-		fmt.Println(s)
-		err = ioutil.WriteFile(*cName, []byte(s), 0644)
-		if err != nil {
-			log.Fatalln(err)
-		}
-	*/
 }
